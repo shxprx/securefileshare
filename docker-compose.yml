@@ -1,0 +1,61 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: secureshare-mongodb
+    ports:
+      - "27017:27017"
+    command: ["--replSet", "rs0", "--bind_ip_all"]
+    volumes:
+      - mongo-data:/data/db
+
+  mongodb-setup:
+    image: mongo:latest
+    container_name: secureshare-mongodb-setup
+    depends_on:
+      - mongodb
+    restart: on-failure
+    entrypoint: >
+      bash -c "
+      echo 'Waiting for mongodb...' &&
+      until mongosh --host mongodb:27017 --eval 'db.runCommand({ping:1})' &>/dev/null; do
+        sleep 1
+      done &&
+      echo 'Initializing replica set...' &&
+      mongosh --host mongodb:27017 --eval 'rs.initiate({_id: \"rs0\", members: [{_id: 0, host: \"mongodb:27017\"}]})'
+      "
+
+  redis:
+    image: redis:alpine
+    container_name: secureshare-redis
+    ports:
+      - "6379:6379"
+
+  backend:
+    build: ./server
+    container_name: secureshare-backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./server/.env
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/secureshare?replicaSet=rs0
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - mongodb
+      - mongodb-setup
+      - redis
+
+  frontend:
+    build: ./client
+    container_name: secureshare-frontend
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=http://localhost:5000
+    depends_on:
+      - backend
+
+volumes:
+  mongo-data:
