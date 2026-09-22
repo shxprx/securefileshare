@@ -2,41 +2,6 @@
 
 SecureShare is a modern, secure, self-hosted file-sharing application that allows users to upload files, configure multiple temporary share links with granular access controls (passwords, download limits, and expirations), and track visitor analytics.
 
----
-
-## 📖 Deep-Dive Engineering Documentation
-
-### 📋 Complete Interview Prep Suite (NEW)
-
-| # | Document | What It Covers |
-|---|----------|----------------|
-| 00 | **[Project Overview](docs/00_PROJECT_OVERVIEW.md)** | Architecture, data model, user flows, tech stack, file counts, key numbers |
-| 01 | **[Concurrency Deep Dive](docs/01_CONCURRENCY_DEEP_DIVE.md)** | Every race condition, TOCTOU vulnerabilities, atomic operations, MongoDB internals |
-| 02 | **[Security Deep Dive](docs/02_SECURITY_DEEP_DIVE.md)** | XSS, CSRF, brute-force, JWT, bcrypt, signed URLs — every attack vector & defense |
-| 03 | **[Database Deep Dive](docs/03_DATABASE_DEEP_DIVE.md)** | Schema design, indexes, transactions, aggregation, scaling considerations |
-| 04 | **[Edge Cases & Error Handling](docs/04_EDGE_CASES_AND_ERROR_HANDLING.md)** | Every failure scenario, compensating rollbacks, error response map |
-| 05 | **[Backend Code Walkthrough](docs/05_BACKEND_CODE_WALKTHROUGH.md)** | Line-by-line WHY for every backend decision |
-| 06 | **[Frontend Architecture](docs/06_FRONTEND_ARCHITECTURE.md)** | React patterns, state management, component design, CSS system |
-| 07 | **[Why/What/When Decisions](docs/07_WHY_WHAT_WHEN_DECISIONS.md)** | Every tech choice justified with alternatives and tradeoffs |
-| 08 | **[Advanced Interview Grill](docs/08_ADVANCED_INTERVIEW_GRILL.md)** | Mock interview: distributed systems, Node.js event loop, Docker networking |
-| 09 | **[API Reference](docs/09_API_REFERENCE.md)** | All 13 endpoints with request/response formats and error codes |
-| 10 | **[System Design Interview Guide](docs/10_SYSTEM_DESIGN_INTERVIEW_GUIDE.md)** | How to present this project: whiteboard flow, STAR method, hooks |
-| 11 | **[DevOps & Deployment](docs/11_DEVOPS_AND_DEPLOYMENT.md)** | Docker, environment variables, production checklist, CI/CD |
-| 12 | **[Scaling & Future Roadmap](docs/12_SCALING_AND_FUTURE_ROADMAP.md)** | Bottlenecks, solutions, V2/V3 features, testing strategy |
-| 13 | **[100 Interview Questions](docs/13_100_INTERVIEW_QUESTIONS.md)** | Rapid-fire Q&A covering every topic |
-| 14 | **[Auth Deep Dive](docs/14_AUTH_DEEP_DIVE.md)** | JWT internals, cookie config, bcrypt, session management |
-| 15 | **[File Upload Deep Dive](docs/15_FILE_UPLOAD_DEEP_DIVE.md)** | Multer, SHA-256, duplicate detection, Supabase, quota management |
-
-### 📚 Original Documentation
-
-1. 🏗️ **[System Architecture & Data Flows](docs/architecture.md)** — Database schemas, API contracts, and sequence flows with Mermaid diagrams
-2. ⚖️ **[Engineering Decisions & Trade-offs](docs/decisions.md)** — Rationale behind key architecture choices
-3. 🎓 **[Technical Interview Bible (Q&A)](docs/interview_bible.md)** — Mock interview questions on concurrency, security, and edge cases
-4. 💬 **[Technical Interview Transcript](docs/interview_transcript.md)** — Full mock interview script
-5. ⚙️ **[Scripts & Deployment Bible](docs/scripts_and_deployment.md)** — NPM scripts, Docker, and cloud deployment
-6. 📂 **[Codebase Guide & Walkthrough](docs/codebase_guide.md)** — File-by-file walkthrough
-
----
 
 ## 🛠️ Technology Stack
 
