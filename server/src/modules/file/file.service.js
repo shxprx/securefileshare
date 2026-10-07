@@ -28,9 +28,9 @@ function calculateHash(buffer) {
  * 1. Validate file (size, type — already done by Multer)
  * 2. Calculate SHA-256 hash
  * 3. Check for duplicate (same hash + same owner)
- * 4. Check user quota (atomic, prevents race condition)
+ * 4. Pre-check user quota (fast rejection — avoids wasted Supabase upload)
  * 5. Upload to Supabase private bucket
- * 6. Mongo transaction: create File + update usedStorage
+ * 6. Mongo transaction: atomic quota check (race-condition guard) + create File + update usedStorage
  * 7. If transaction fails: delete from Supabase (compensating rollback)
  */
 async function uploadFile({ file, userId, forceUpload }) {
@@ -54,6 +54,14 @@ async function uploadFile({ file, userId, forceUpload }) {
         },
       };
     }
+  }
+
+  // Pre-check quota (fast rejection — avoids wasted Supabase upload).
+  // Non-atomic here is fine; the atomic check inside the transaction is
+  // the true race-condition guard for concurrent uploads.
+  const userForQuota = await User.findById(userId).select("usedStorage").lean();
+  if (!userForQuota || userForQuota.usedStorage + file.size > MAX_STORAGE) {
+    throw new AppError("Storage quota exceeded. Max 100 MB.", 400);
   }
 
   // Generate unique storage key: files/userId/uuid.ext
